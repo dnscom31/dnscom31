@@ -1,21 +1,28 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const fs = require('fs');
-const path = require('path');
 const session = require('express-session');
-const app = express();
-const port = process.env.PORT || 3000;
+const path = require('path');
 
+const app = express();
+
+// 미들웨어 설정
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
-app.use(express.static(path.join(__dirname, 'public')));
 app.use(session({
     secret: 'secret-key',
     resave: false,
     saveUninitialized: true
 }));
 
-// 관리자 로그인 페이지 제공
+// 정적 파일 제공
+app.use(express.static(path.join(__dirname, 'public')));
+
+// 루트 경로 처리
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'index.html'));
+});
+
+// 로그인 페이지 제공
 app.get('/login', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'login.html'));
 });
@@ -72,13 +79,13 @@ app.get('/data', (req, res) => {
     if (req.session.user === 'admin') {
         fs.readFile('submissions.txt', 'utf8', (err, data) => {
             if (err) throw err;
-            res.send(`<pre>${data}</pre>`);
+            const date = req.query.date;
+            const filteredData = data.split('\n\n').filter(entry => entry.includes(`날짜: ${date}`)).join('\n\n');
+            res.send(`<pre>${filteredData}</pre>`);
         });
     } else {
         res.redirect('/login');
     }
 });
 
-app.listen(port, () => {
-    console.log(`서버가 http://localhost:${port} 에서 실행 중입니다.`);
-});
+module.exports = app;
