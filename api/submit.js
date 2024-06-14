@@ -3,46 +3,18 @@ const bodyParser = require('body-parser');
 const fs = require('fs');
 const path = require('path');
 const session = require('express-session');
+
 const app = express();
-const port = process.env.PORT || 3000;
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
-app.use(express.static(path.join(__dirname, 'public')));
 app.use(session({
     secret: 'secret-key',
     resave: false,
     saveUninitialized: true
 }));
 
-// 관리자 로그인 페이지 제공
-app.get('/login', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'login.html'));
-});
-
-// 로그인 처리
-app.post('/login', (req, res) => {
-    const { username, password } = req.body;
-    // 관리자 계정 (실제로는 안전한 방법으로 저장하고 검증해야 함)
-    if (username === 'admin' && password === 'password') {
-        req.session.user = 'admin';
-        res.redirect('/admin');
-    } else {
-        res.send('로그인 실패');
-    }
-});
-
-// 관리자 전용 페이지 제공
-app.get('/admin', (req, res) => {
-    if (req.session.user === 'admin') {
-        res.sendFile(path.join(__dirname, 'public', 'admin.html'));
-    } else {
-        res.redirect('/login');
-    }
-});
-
-// 데이터 제출 처리
-app.post('/submit', (req, res) => {
+app.post('/api/submit', (req, res) => {
     const data = req.body;
     const timestamp = new Date().toISOString();
     const textData = `
@@ -67,18 +39,4 @@ app.post('/submit', (req, res) => {
     });
 });
 
-// 저장된 데이터 표시
-app.get('/data', (req, res) => {
-    if (req.session.user === 'admin') {
-        fs.readFile('submissions.txt', 'utf8', (err, data) => {
-            if (err) throw err;
-            res.send(`<pre>${data}</pre>`);
-        });
-    } else {
-        res.redirect('/login');
-    }
-});
-
-app.listen(port, () => {
-    console.log(`서버가 http://localhost:${port} 에서 실행 중입니다.`);
-});
+module.exports = app;

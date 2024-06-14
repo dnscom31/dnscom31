@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>관리자 페이지</title>
+</head>
+<body>
+    <h1>관리자 페이지</h1>
+    <label for="date">날짜 선택:</label>
+    <input type="date" id="date" name="date">
+    <button onclick="fetchData()">데이터 조회</button>
+    <div id="data"></div>
+
+    <script>
+        function fetchData() {
+            const date = document.getElementById('date').value;
+            fetch(`/data?date=${date}`)
+                .then(response => response.text())
+                .then(data => {
+                    document.getElementById('data').innerHTML = `<pre>${data}</pre>`;
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+        }
+    </script>
+</body>
+</html>
