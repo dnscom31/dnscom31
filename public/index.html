@@ -127,10 +127,10 @@
         <p>© 2024 동구바이오</p>
     </footer>
 
-    <script>
+   <script>
     document.getElementById('adminButton').addEventListener('click', () => {
-            window.location.href = '/login';
-        });
+        window.location.href = '/login.html';
+    });
 
     document.addEventListener('DOMContentLoaded', () => {
         const aGroupCheckboxes = document.querySelectorAll('.a-group-checkbox');
@@ -283,7 +283,7 @@
                 c_group_selections: formData.getAll('c_group_selections')
             };
 
-            fetch('/submit', {
+            fetch('/api/submit', {  // 경로 수정
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -299,6 +299,6 @@
             });
         });
     });
-    </script>
+</script>
 </body>
 </html>
