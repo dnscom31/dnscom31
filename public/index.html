@@ -14,7 +14,8 @@
   <main>
     <section id="mandatory-checks">
       <h2>인적사항</h2>
-      <form action="/submit" method="post">
+      <!-- action 속성 제거하여 기본 제출을 막고 JavaScript로 처리 -->
+      <form id="submissionForm" method="post">
         <ol>
           <li>성 명</li>
           <textarea name="name" placeholder="성함을 입력해 주세요" rows="1" cols="40"></textarea>
@@ -254,7 +255,7 @@
       });
 
       // 폼 제출 이벤트 처리 (검증 포함)
-      document.querySelector('form').addEventListener('submit', (event) => {
+      document.getElementById('submissionForm').addEventListener('submit', (event) => {
         event.preventDefault();
 
         // 인적사항 필수 입력 검증
@@ -315,7 +316,7 @@
         }
         if (!validGroupSelection) return;
 
-        const formData = new FormData(event.target);
+        const formData = new FormData(document.getElementById('submissionForm'));
         const data = {
           name: formData.get('name'),
           contact: formData.get('contact'),
