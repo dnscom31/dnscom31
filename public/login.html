@@ -7,7 +7,7 @@
 </head>
 <body>
     <h1>관리자 로그인</h1>
-    <form action="/login" method="post">
+    <form id="loginForm">
         <label for="username">사용자 이름:</label>
         <input type="text" id="username" name="username" required>
         <br>
@@ -16,5 +16,28 @@
         <br>
         <button type="submit">로그인</button>
     </form>
+
+    <script>
+        document.getElementById("loginForm").addEventListener("submit", function(event) {
+            event.preventDefault(); // 폼 기본 제출 동작 방지
+
+            const username = document.getElementById("username").value;
+            const password = document.getElementById("password").value;
+
+            // 관리자 계정
+            const adminUser = "admin";
+            const adminPass = "1234"; // 원하는 비밀번호로 변경
+
+            if (username === adminUser && password === adminPass) {
+                // 로그인 성공 시 로컬 스토리지에 로그인 상태 저장
+                localStorage.setItem("isLoggedIn", "true");
+
+                // 관리자 페이지로 이동
+                window.location.href = "admin.html";
+            } else {
+                alert("아이디 또는 비밀번호가 잘못되었습니다.");
+            }
+        });
+    </script>
 </body>
 </html>

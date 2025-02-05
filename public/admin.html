@@ -6,24 +6,50 @@
     <title>관리자 페이지</title>
 </head>
 <body>
+
+    <script>
+        // ✅ 로그인 여부 확인 (비로그인 시 login.html로 강제 이동)
+        if (localStorage.getItem("isLoggedIn") !== "true") {
+            alert("로그인이 필요합니다.");
+            window.location.href = "login.html";
+        }
+    </script>
+
     <h1>관리자 페이지</h1>
     <label for="date">날짜 선택:</label>
     <input type="date" id="date" name="date">
     <button onclick="fetchData()">데이터 조회</button>
+    <button onclick="logout()">로그아웃</button>
+
     <div id="data"></div>
 
+    <!-- admin.html 일부 -->
     <script>
         function fetchData() {
             const date = document.getElementById('date').value;
-            fetch(`/data?date=${date}`)
-                .then(response => response.text())
-                .then(data => {
-                    document.getElementById('data').innerHTML = `<pre>${data}</pre>`;
+            let url = "/api/data";
+
+            if (date) {
+                url += `?date=${date}`;
+            }
+
+            fetch(url)
+                .then(response => {
+                    if (!response.ok) {
+                        return response.text().then(text => { throw new Error(text); });
+                    }
+                    return response.text();  // 변경: JSON 대신 텍스트(HTML)로 처리
+                })
+                .then(html => {
+                    document.getElementById('data').innerHTML = html;
                 })
                 .catch(error => {
-                    console.error('Error:', error);
+                    console.error('❌ 오류 상세:', error);
+                    document.getElementById('data').innerHTML = `<p>데이터 조회 중 오류가 발생했습니다.</p>`;
                 });
         }
     </script>
+
+
 </body>
 </html>

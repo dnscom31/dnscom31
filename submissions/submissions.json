@@ -1,0 +1,23 @@
+[
+  {
+    "timestamp": "2025-02-05T04:59:25.596Z",
+    "name": "이준원",
+    "contact": "01091823490",
+    "email": "1st_yourmate@naver.com",
+    "address": "경기도",
+    "preferred_date": "2025. 2. 6. 오후 1:30:00",
+    "medications": "없음",
+    "polyp_removal": "no",
+    "flight_within_2weeks": "no",
+    "mri_issues": "없음",
+    "checkup_type": "소화기형",
+    "a_group_selections": [
+      "경동맥초음파",
+      "폐CT"
+    ],
+    "b_group_selections": [
+      "유방초음파"
+    ],
+    "c_group_selections": []
+  }
+]

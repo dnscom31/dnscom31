@@ -1,304 +1,289 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>동구바이오 유치고객 종합검진 안내문</title>
-    <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>KG CHEM 종합검진 안내문</title>
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <header>
-        <h1 class="title">동구바이오 유치고객 종합검진 안내문</h1>
-        <button id="adminButton" class="admin-button">관리자</button>
-    </header>
-    <main>
-        <section id="mandatory-checks">
-    <h2>인적사항</h2>
-    <form action="/submit" method="post">
+  <header>
+    <h1 class="title">KG CHEM 종합검진 안내문</h1>
+    <button id="adminButton" class="admin-button">관리자</button>
+  </header>
+  <main>
+    <section id="mandatory-checks">
+      <h2>인적사항</h2>
+      <form action="/submit" method="post">
         <ol>
-            <li>성 명</li>
-            <textarea name="name" placeholder="성함을 입력해 주세요" rows="1" cols="40"></textarea>
+          <li>성 명</li>
+          <textarea name="name" placeholder="성함을 입력해 주세요" rows="1" cols="40"></textarea>
 
-            <li>연락처</li>
-            <textarea name="contact" placeholder="연락처를 입력하세요" rows="1" cols="40"></textarea>
+          <li>연락처</li>
+          <textarea name="contact" placeholder="연락처를 입력하세요" rows="1" cols="40"></textarea>
 
-            <li>이메일</li>
-            <textarea name="email" placeholder="이메일을 입력하세요" rows="1" cols="40"></textarea>
+          <li>이메일</li>
+          <textarea name="email" placeholder="이메일을 입력하세요" rows="1" cols="40"></textarea>
 
-            <li>주  소</li>
-            <textarea name="address" placeholder="주소를 입력하세요" rows="1" cols="40"></textarea>
+          <li>주  소</li>
+          <textarea name="address" placeholder="주소를 입력하세요" rows="1" cols="40"></textarea>
 
-            <li>검진희망일</li>
-            <input type="datetime-local" name="preferred_date" step="1800"> <!-- 1800초 = 30분 -->
+          <li>검진희망일</li>
+          <input type="datetime-local" name="preferred_date" step="1800">
         </ol>
         <h2>필수 확인 사항</h2>
         <ol>
-            <li>복용약 <span style="font-size: 0.8em;">(아스피린은 7일전 부터 복용 금지 입니다.)</span></li>
-            <textarea name="medications" placeholder="복용중인 약물을 입력하세요" rows="2" cols="100"></textarea>
+          <li>복용약 <span style="font-size: 0.8em;">(아스피린은 7일전 부터 복용 금지 입니다.)</span></li>
+          <textarea name="medications" placeholder="복용중인 약물을 입력하세요" rows="2" cols="100"></textarea>
 
-            <li>대장 내시경 시 용종 제거 동의 (비용 별도)</li>
-            <label>
-                <input type="radio" name="polyp_removal" value="yes"> O
-            </label>
-            <label>
-                <input type="radio" name="polyp_removal" value="no"> X
-            </label>
+          <li>대장 내시경 시 용종 제거 동의 (비용 별도)</li>
+          <label>
+            <input type="radio" name="polyp_removal" value="yes"> O
+          </label>
+          <label>
+            <input type="radio" name="polyp_removal" value="no"> X
+          </label>
 
-            <li>대장 내시경 후 2주 이내 비행 예정 여부</li>
-            <label>
-                <input type="radio" name="flight_within_2weeks" value="yes"> O
-            </label>
-            <label>
-                <input type="radio" name="flight_within_2weeks" value="no"> X
-            </label>
+          <li>대장 내시경 후 2주 이내 비행 예정 여부</li>
+          <label>
+            <input type="radio" name="flight_within_2weeks" value="yes"> O
+          </label>
+          <label>
+            <input type="radio" name="flight_within_2weeks" value="no"> X
+          </label>
 
-            <li>MRI 검사 시 문제가 될 수 있는 폐쇄공포증 및 금속 인공물, 인공 판막 등 장착 여부</li>
-            <textarea name="mri_issues" placeholder="상세 내용을 입력하세요" rows="2" cols="100"></textarea>
+          <li>MRI 검사 시 문제가 될 수 있는 폐쇄공포증 및 금속 인공물, 인공 판막 등 장착 여부</li>
+          <textarea name="mri_issues" placeholder="상세 내용을 입력하세요" rows="2" cols="100"></textarea>
         </ol>
+
+        <!-- 검진 유형 선택 추가 -->
+        <h2>검진 유형 선택</h2>
+        <div id="checkup-type">
+          <label><input type="radio" name="checkup_type" value="기본형"> 기본형</label>
+          <label><input type="radio" name="checkup_type" value="소화기형"> 소화기형</label>
+          <label><input type="radio" name="checkup_type" value="MRI형"> MRI형</label>
+        </div>
+
         <section id="a-group">
-            <h2>A그룹 <span style="font-size: 0.8em;">4가지 선택 가능</span></h2>
-            <ul>
-                <li>[01]갑상선초음파 <input type="checkbox" class="a-group-checkbox" name="a_group_selections" value="갑상선초음파"></li>
-                <li>[02]경동맥초음파 <input type="checkbox" class="a-group-checkbox" name="a_group_selections" value="경동맥초음파"></li>
-                <li>[03]뇌CT <input type="checkbox" class="a-group-checkbox" name="a_group_selections" value="뇌CT"></li>
-                <li>[04]폐CT <input type="checkbox" class="a-group-checkbox" name="a_group_selections" value="폐CT"></li>
-                <li>[05]요추CT <input type="checkbox" class="a-group-checkbox" name="a_group_selections" value="요추CT"></li>
-                <li>[06]경추CT <input type="checkbox" class="a-group-checkbox" name="a_group_selections" value="경추CT"></li>
-                <li>[07]심장MDCT <input type="checkbox" class="a-group-checkbox" name="a_group_selections" value="심장MDCT"></li>
-                <li>[08]복부비만CT <input type="checkbox" class="a-group-checkbox" name="a_group_selections" value="복부비만CT"></li>
-                <li>[09]골다공증QCT + 비타민D <input type="checkbox" class="a-group-checkbox" name="a_group_selections" value="골다공증QCT + 비타민D"></li>
-                <li>[10]혈관협착도ABI <input type="checkbox" class="a-group-checkbox" name="a_group_selections" value="혈관협착도ABI"></li>
-                <li>[11](여)경질초음파 <input type="checkbox" class="a-group-checkbox" name="a_group_selections" value="경질초음파"></li>
-                <li>[12](여)액상 자궁경보세포진 <input type="checkbox" class="a-group-checkbox" name="a_group_selections" value="액상 자궁경보세포진"></li>
-                <li>[13](여)_(혈액)마스토체크_유방암 <input type="checkbox" class="a-group-checkbox" name="a_group_selections" value="마스토체크_유방암"></li>
-                <li>[14](여)HPV바이러스 <input type="checkbox" class="a-group-checkbox" name="a_group_selections" value="HPV바이러스"></li>
-                <li>[15](혈액)NK뷰키트 <input type="checkbox" class="a-group-checkbox" name="a_group_selections" value="NK뷰키트"></li>
-                <li>[16](여)여성호르몬(Estradiol+FSH) <input type="checkbox" class="a-group-checkbox" name="a_group_selections" value="여성호르몬(Estradiol+FSH)"></li>
-                <li>[17](남)남성호르몬(Testosterone+Free Testosterone) <input type="checkbox" class="a-group-checkbox" name="a_group_selections" value="남성호르몬(Testosterone+Free Testosterone)"></li>
-                <li>[18](혈액)스마트암_난소암 <input type="checkbox" class="a-group-checkbox" name="a_group_selections" value="스마트암_난소암"></li>
-                <li>[19](혈액) 스마트암_폐암 <input type="checkbox" class="a-group-checkbox" name="a_group_selections" value="스마트암_폐암"></li>
-                <li>[20](혈액) 스마트암_간암 <input type="checkbox" class="a-group-checkbox" name="a_group_selections" value="스마트암_간암"></li>
-                <li>[21](혈액) 스마트암_대장암 <input type="checkbox" class="a-group-checkbox" name="a_group_selections" value="스마트암_대장암"></li>
-                <li>[22](혈액) 스마트암_췌장암 <input type="checkbox" class="a-group-checkbox" name="a_group_selections" value="스마트암_췌장암"></li>
-                <li>B그룹선택 희망1 <input type="checkbox" class="b-group-option b-group-option1" name="b_group_selections" value="B그룹선택 희망1"></li>
-                <li>B그룹선택 희망2 <input type="checkbox" class="b-group-option b-group-option2" name="b_group_selections" value="B그룹선택 희망2"></li>
-                <li>C그룹선택 희망 <input type="checkbox" class="c-group-option" name="c_group_selections" value="C그룹선택 희망"></li>
-            </ul>
+          <h2>A그룹 <span style="font-size: 0.8em;">4가지 선택 가능</span></h2>
+          <ul>
+            <li>[01]갑상선초음파 <input type="checkbox" class="a-group-checkbox" name="a_group_selections" value="갑상선초음파"></li>
+            <li>[02]경동맥초음파 <input type="checkbox" class="a-group-checkbox" name="a_group_selections" value="경동맥초음파"></li>
+            <li>[03]뇌CT <input type="checkbox" class="a-group-checkbox" name="a_group_selections" value="뇌CT"></li>
+            <li>[04]폐CT <input type="checkbox" class="a-group-checkbox" name="a_group_selections" value="폐CT"></li>
+            <li>[05]요추CT <input type="checkbox" class="a-group-checkbox" name="a_group_selections" value="요추CT"></li>
+            <li>[06]경추CT <input type="checkbox" class="a-group-checkbox" name="a_group_selections" value="경추CT"></li>
+            <li>[07]심장MDCT <input type="checkbox" class="a-group-checkbox" name="a_group_selections" value="심장MDCT"></li>
+            <li>[08]복부비만CT <input type="checkbox" class="a-group-checkbox" name="a_group_selections" value="복부비만CT"></li>
+            <li>[09]골다공증QCT + 비타민D <input type="checkbox" class="a-group-checkbox" name="a_group_selections" value="골다공증QCT + 비타민D"></li>
+            <li>[10]혈관협착도ABI <input type="checkbox" class="a-group-checkbox" name="a_group_selections" value="혈관협착도ABI"></li>
+            <li>[11](여)경질초음파 <input type="checkbox" class="a-group-checkbox" name="a_group_selections" value="경질초음파"></li>
+            <li>[12](여)액상 자궁경보세포진 <input type="checkbox" class="a-group-checkbox" name="a_group_selections" value="액상 자궁경보세포진"></li>
+            <li>[13](여)_(혈액)마스토체크_유방암 <input type="checkbox" class="a-group-checkbox" name="a_group_selections" value="마스토체크_유방암"></li>
+            <li>[14](여)HPV바이러스 <input type="checkbox" class="a-group-checkbox" name="a_group_selections" value="HPV바이러스"></li>
+            <li>[15](혈액)NK뷰키트 <input type="checkbox" class="a-group-checkbox" name="a_group_selections" value="NK뷰키트"></li>
+            <li>[16](여)여성호르몬(Estradiol+FSH) <input type="checkbox" class="a-group-checkbox" name="a_group_selections" value="여성호르몬(Estradiol+FSH)"></li>
+            <li>[17](남)남성호르몬(Testosterone+Free Testosterone) <input type="checkbox" class="a-group-checkbox" name="a_group_selections" value="남성호르몬(Testosterone+Free Testosterone)"></li>
+            <li>[18](혈액)스마트암_난소암 <input type="checkbox" class="a-group-checkbox" name="a_group_selections" value="스마트암_난소암"></li>
+            <li>[19](혈액) 스마트암_폐암 <input type="checkbox" class="a-group-checkbox" name="a_group_selections" value="스마트암_폐암"></li>
+            <li>[20](혈액) 스마트암_간암 <input type="checkbox" class="a-group-checkbox" name="a_group_selections" value="스마트암_간암"></li>
+            <li>[21](혈액) 스마트암_대장암 <input type="checkbox" class="a-group-checkbox" name="a_group_selections" value="스마트암_대장암"></li>
+            <li>[22](혈액) 스마트암_췌장암 <input type="checkbox" class="a-group-checkbox" name="a_group_selections" value="스마트암_췌장암"></li>
+          </ul>
         </section>
         <section id="b-group">
-            <h2>B그룹</h2>
-            <ul>
-                <li>[가]심장초음파 <input type="checkbox" class="b-group-checkbox" name="b_group_selections" value="심장초음파" disabled></li>
-                <li>[나]유방초음파 <input type="checkbox" class="b-group-checkbox" name="b_group_selections" value="유방초음파" disabled></li>
-                <li>[다]알츠온치매검사 <input type="checkbox" class="b-group-checkbox" name="b_group_selections" value="알츠온치매검사" disabled></li>
-                <li>[라](혈액) 알레르기, 91종 <input type="checkbox" class="b-group-checkbox" name="b_group_selections" value="알레르기, 91종" disabled></li>
-            </ul>
+          <h2>B그룹</h2>
+          <ul>
+            <li>[가]심장초음파 <input type="checkbox" class="b-group-checkbox" name="b_group_selections" value="심장초음파"></li>
+            <li>[나]유방초음파 <input type="checkbox" class="b-group-checkbox" name="b_group_selections" value="유방초음파"></li>
+            <li>[다]알츠온치매검사 <input type="checkbox" class="b-group-checkbox" name="b_group_selections" value="알츠온치매검사"></li>
+            <li>[라](혈액) 알레르기, 91종 <input type="checkbox" class="b-group-checkbox" name="b_group_selections" value="알레르기, 91종"></li>
+          </ul>
         </section>
         <section id="c-group">
-            <h2>C그룹</h2>
-            <ul>
-                <li>[A]뇌MRA + 뇌MRI <input type="checkbox" class="c-group-checkbox" name="c_group_selections" value="뇌MRA + 뇌MRI"></li>
-                <li>[B]경추MRI <input type="checkbox" class="c-group-checkbox" name="c_group_selections" value="경추MRI"></li>
-                <li>[C]요추MRI <input type="checkbox" class="c-group-checkbox" name="c_group_selections" value="요추MRI"></li>
-                <li>[D]스마트암검사(6)7종_혈액 <input type="checkbox" class="c-group-checkbox" name="c_group_selections" value="스마트암검사(6)7종_혈액"></li>
-            </ul>
+          <h2>C그룹</h2>
+          <ul>
+            <li>[A]뇌MRA + 뇌MRI <input type="checkbox" class="c-group-checkbox" name="c_group_selections" value="뇌MRA + 뇌MRI"></li>
+            <li>[B]경추MRI <input type="checkbox" class="c-group-checkbox" name="c_group_selections" value="경추MRI"></li>
+            <li>[C]요추MRI <input type="checkbox" class="c-group-checkbox" name="c_group_selections" value="요추MRI"></li>
+            <li>[D]스마트암검사(6)7종_혈액 <input type="checkbox" class="c-group-checkbox" name="c_group_selections" value="스마트암검사(6)7종_혈액"></li>
+          </ul>
         </section>
         <section id="vip-checkup">
-            <h2>VIP검진형</h2>
-            <p>공통항목(90여종) + A그룹 선택 4가지 + C그룹 선택 1가지 + 대장수면내시경 + 유전자검사 (남 34종 / 여 35종)</p>
-            <p>금액: <del>2,750,000원</del> 1,000,000원</p>
+          <h2>검진유형안내</h2>
+          <p>기본형 : 공통항목(90여종) + A그룹 선택 4가지 </p>
+            <p>소화기형 : 공통항목(90여종) + A그룹 선택 2가지 + B그룹 선택 1가지</p>
+            <p>MRI형 : 공통항목(90여종) + c그룹 선택 1가지</p>
+
         </section>
         <section id="additional-info">
-            <h2>기타안내</h2>
-            <ul>
-                <li>위수면 희망시 별도 본인부담 없음</li>
-                <li>위 또는 대장 내시경 용종제거 및 조직검사 비용 별도</li>
-                <li>내시경, 심장초음파, MRI 선택시 예약필수</li>
-                <li>A그룹 2가지 미선택시 B그룹 1가지 선택 가능</li>
-                <li>A그룹 4가지 미선택시 C그룹 1가지 선택 가능</li>
-                <li>A그룹 추가시 항목당 7만원 추가</li>
-            </ul>
+          <h2>기타안내</h2>
+          <ul>
+            <li>위수면 희망시 별도 본인부담 없음</li>
+            <li>위 또는 대장 내시경 용종제거 및 조직검사 비용 별도</li>
+            <li>내시경, 심장초음파, MRI 선택시 예약필수</li>
+            <li>A그룹 2가지 미선택시 B그룹 1가지 선택 가능</li>
+            <li>A그룹 추가시 항목당 7만원 추가</li>
+          </ul>
         </section>
         <button type="submit">제출</button>
-    </form>
-</section>
-    </main>
-    <footer>
-        <p>© 2024 동구바이오</p>
-    </footer>
+      </form>
+    </section>
+  </main>
+  <footer>
+    <p>© 뉴고려병원</p>
+  </footer>
 
-   <script>
+  <script>
     document.getElementById('adminButton').addEventListener('click', () => {
-        window.location.href = '/login.html';
+      window.location.href = '/login.html';
     });
 
     document.addEventListener('DOMContentLoaded', () => {
-        const aGroupCheckboxes = document.querySelectorAll('.a-group-checkbox');
-        const bGroupCheckboxes = document.querySelectorAll('.b-group-checkbox');
-        const cGroupCheckboxes = document.querySelectorAll('.c-group-checkbox');
-        const bGroupOptions = document.querySelectorAll('.b-group-option');
-        const cGroupOption = document.querySelector('.c-group-option');
-        const maxASelection = 4;
-        let maxBSelection = 1;
-        let maxCSelection = 1;
+      const aGroupCheckboxes = document.querySelectorAll('.a-group-checkbox');
+      const bGroupCheckboxes = document.querySelectorAll('.b-group-checkbox');
+      const cGroupCheckboxes = document.querySelectorAll('.c-group-checkbox');
+      let maxASelection = 0;
+      let maxBSelection = 0;
+      let maxCSelection = 0;
 
-        const updateSelections = () => {
-            const bOption1Checked = document.querySelector('.b-group-option1:checked') !== null;
-            const bOption2Checked = document.querySelector('.b-group-option2:checked') !== null;
-            const cOptionChecked = document.querySelector('.c-group-option:checked') !== null;
+      // 초기에는 모든 그룹의 체크박스를 비활성화 및 선택 해제
+      function disableAllGroups() {
+        aGroupCheckboxes.forEach(cb => { cb.disabled = true; cb.checked = false; });
+        bGroupCheckboxes.forEach(cb => { cb.disabled = true; cb.checked = false; });
+        cGroupCheckboxes.forEach(cb => { cb.disabled = true; cb.checked = false; });
+      }
+      disableAllGroups();
 
-            let maxAAllowed = maxASelection;
+      // 검진 유형 선택에 따른 그룹 활성화, 최대 선택 개수 업데이트 및 기존 선택 해제 처리
+      function updateCheckupTypeSelection() {
+        const selectedType = document.querySelector('input[name="checkup_type"]:checked');
+        if (!selectedType) return;
+        const type = selectedType.value;
 
-            if (bOption1Checked || bOption2Checked) {
-                maxAAllowed = 2;
-                maxBSelection = 1;
-                bGroupCheckboxes.forEach(checkbox => {
-                    checkbox.disabled = false;
-                });
-            } else {
-                bGroupCheckboxes.forEach(checkbox => {
-                    checkbox.disabled = true;
-                });
-                maxBSelection = 1;
-            }
+        // 기존 선택된 체크박스 모두 해제
+        aGroupCheckboxes.forEach(cb => cb.checked = false);
+        bGroupCheckboxes.forEach(cb => cb.checked = false);
+        cGroupCheckboxes.forEach(cb => cb.checked = false);
 
-            if (bOption1Checked && bOption2Checked) {
-                maxAAllowed = 0;
-                maxBSelection = 2;
-            }
+        if (type === "기본형") {
+          maxASelection = 4;
+          maxBSelection = 0;
+          maxCSelection = 0;
+          document.querySelector('#a-group h2').innerHTML = 'A그룹 <span style="font-size: 0.8em;">4가지 선택 가능</span>';
+          document.querySelector('#b-group h2').textContent = 'B그룹 (선택 불가능)';
+          document.querySelector('#c-group h2').textContent = 'C그룹 (선택 불가능)';
+        } else if (type === "소화기형") {
+          maxASelection = 2;
+          maxBSelection = 1;
+          maxCSelection = 0;
+          document.querySelector('#a-group h2').innerHTML = 'A그룹 <span style="font-size: 0.8em;">2가지 선택 가능</span>';
+          document.querySelector('#b-group h2').innerHTML = 'B그룹 <span style="font-size: 0.8em;">1가지 선택 가능</span>';
+          document.querySelector('#c-group h2').textContent = 'C그룹 (선택 불가능)';
+        } else if (type === "MRI형") {
+          maxASelection = 0;
+          maxBSelection = 0;
+          maxCSelection = 1;
+          document.querySelector('#a-group h2').textContent = 'A그룹 (선택 불가능)';
+          document.querySelector('#b-group h2').textContent = 'B그룹 (선택 불가능)';
+          document.querySelector('#c-group h2').innerHTML = 'C그룹 <span style="font-size: 0.8em;">1가지 선택 가능</span>';
+        }
 
-            if (cOptionChecked) {
-                maxAAllowed = 0;
-                maxBSelection = 0;
-                maxCSelection = 2;
-            } else {
-                maxCSelection = 1;
-            }
+        // 각 그룹의 체크박스 활성화/비활성화 처리
+        aGroupCheckboxes.forEach(cb => {
+          cb.disabled = (maxASelection === 0);
+        });
+        bGroupCheckboxes.forEach(cb => {
+          cb.disabled = (maxBSelection === 0);
+        });
+        cGroupCheckboxes.forEach(cb => {
+          cb.disabled = (maxCSelection === 0);
+        });
+      }
 
-            aGroupCheckboxes.forEach(checkbox => {
-                checkbox.disabled = maxAAllowed === 0;
-            });
+      // 검진 유형 radio 버튼 변화에 따른 이벤트 처리
+      const checkupTypeRadios = document.querySelectorAll('input[name="checkup_type"]');
+      checkupTypeRadios.forEach(radio => {
+        radio.addEventListener('change', updateCheckupTypeSelection);
+      });
 
-            const checkedA = document.querySelectorAll('.a-group-checkbox:checked').length;
-            if (checkedA > maxAAllowed) {
-                aGroupCheckboxes.forEach(checkbox => {
-                    if (checkbox.checked) {
-                        checkbox.checked = false;
-                    }
-                });
-            }
+      // A그룹 체크박스 선택 제한 처리
+      aGroupCheckboxes.forEach(checkbox => {
+        checkbox.addEventListener('change', () => {
+          const checkedCount = document.querySelectorAll('#a-group input[type="checkbox"]:checked').length;
+          if (checkedCount > maxASelection) {
+            checkbox.checked = false;
+            alert(`A그룹은 최대 ${maxASelection}가지 항목만 선택 가능합니다.`);
+          }
+        });
+      });
 
-            const checkedB = document.querySelectorAll('.b-group-checkbox:checked').length;
-            if (checkedB > maxBSelection) {
-                bGroupCheckboxes.forEach(checkbox => {
-                    if (checkbox.checked) {
-                        checkbox.checked = false;
-                    }
-                });
-            }
+      // B그룹 체크박스 선택 제한 처리
+      bGroupCheckboxes.forEach(checkbox => {
+        checkbox.addEventListener('change', () => {
+          const checkedCount = document.querySelectorAll('#b-group input[type="checkbox"]:checked').length;
+          if (checkedCount > maxBSelection) {
+            checkbox.checked = false;
+            alert(`B그룹은 최대 ${maxBSelection}가지 항목만 선택 가능합니다.`);
+          }
+        });
+      });
 
-            const checkedC = document.querySelectorAll('.c-group-checkbox:checked').length;
-            if (checkedC > maxCSelection) {
-                cGroupCheckboxes.forEach(checkbox => {
-                    if (checkbox.checked) {
-                        checkbox.checked = false;
-                    }
-                });
-            }
+      // C그룹 체크박스 선택 제한 처리
+      cGroupCheckboxes.forEach(checkbox => {
+        checkbox.addEventListener('change', () => {
+          const checkedCount = document.querySelectorAll('#c-group input[type="checkbox"]:checked').length;
+          if (checkedCount > maxCSelection) {
+            checkbox.checked = false;
+            alert(`C그룹은 최대 ${maxCSelection}가지 항목만 선택 가능합니다.`);
+          }
+        });
+      });
+
+      // 폼 제출 이벤트 처리
+      document.querySelector('form').addEventListener('submit', (event) => {
+        event.preventDefault();
+
+        // 검진 유형이 선택되지 않은 경우 제출 차단
+        const selectedType = document.querySelector('input[name="checkup_type"]:checked');
+        if (!selectedType) {
+          alert("검진 유형을 선택해 주세요.");
+          return;
+        }
+
+        const formData = new FormData(event.target);
+        const data = {
+          name: formData.get('name'),
+          contact: formData.get('contact'),
+          email: formData.get('email'),
+          address: formData.get('address'),
+          preferred_date: formData.get('preferred_date'),
+          medications: formData.get('medications'),
+          polyp_removal: formData.get('polyp_removal'),
+          flight_within_2weeks: formData.get('flight_within_2weeks'),
+          mri_issues: formData.get('mri_issues'),
+          checkup_type: formData.get('checkup_type'),
+          a_group_selections: formData.getAll('a_group_selections'),
+          b_group_selections: formData.getAll('b_group_selections'),
+          c_group_selections: formData.getAll('c_group_selections')
         };
 
-        aGroupCheckboxes.forEach(checkbox => {
-            checkbox.addEventListener('change', () => {
-                const checkedCount = document.querySelectorAll('.a-group-checkbox:checked').length;
-                const bOption1Checked = document.querySelector('.b-group-option1:checked') !== null;
-                const bOption2Checked = document.querySelector('.b-group-option2:checked') !== null;
-                const cOptionChecked = document.querySelector('.c-group-option:checked') !== null;
-
-                let maxAAllowed = maxASelection;
-
-                if (bOption1Checked || bOption2Checked) {
-                    maxAAllowed = 2;
-                }
-
-                if (bOption1Checked && bOption2Checked) {
-                    maxAAllowed = 0;
-                }
-
-                if (cOptionChecked) {
-                    maxAAllowed = 0;
-                }
-
-                if (checkedCount > maxAAllowed) {
-                    checkbox.checked = false;
-                    alert(`최대 ${maxAAllowed}가지 항목만 선택 가능합니다.`);
-                }
-            });
+        fetch('/api/submit', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(data)
+        })
+        .then(response => response.text())
+        .then(result => {
+          alert(result);
+        })
+        .catch(error => {
+          console.error('Error:', error);
         });
-
-        bGroupCheckboxes.forEach(checkbox => {
-            checkbox.addEventListener('change', () => {
-                const checkedCount = document.querySelectorAll('.b-group-checkbox:checked').length;
-                if (checkedCount > maxBSelection) {
-                    checkbox.checked = false;
-                    alert(`최대 ${maxBSelection}가지 항목만 선택 가능합니다.`);
-                }
-            });
-        });
-
-        cGroupCheckboxes.forEach(checkbox => {
-            checkbox.addEventListener('change', () => {
-                const checkedCount = document.querySelectorAll('.c-group-checkbox:checked').length;
-                if (checkedCount > maxCSelection) {
-                    checkbox.checked = false;
-                    alert(`최대 ${maxCSelection}가지 항목만 선택 가능합니다.`);
-                }
-            });
-        });
-
-        bGroupOptions.forEach(option => {
-            option.addEventListener('change', updateSelections);
-        });
-
-        cGroupOption.addEventListener('change', updateSelections);
-
-        updateSelections();
-
-        // 폼 제출 이벤트 처리
-        document.querySelector('form').addEventListener('submit', (event) => {
-            event.preventDefault();
-
-            const formData = new FormData(event.target);
-            const data = {
-                name: formData.get('name'),
-                contact: formData.get('contact'),
-                email: formData.get('email'),
-                address: formData.get('address'),
-                preferred_date: formData.get('preferred_date'),
-                medications: formData.get('medications'),
-                polyp_removal: formData.get('polyp_removal'),
-                flight_within_2weeks: formData.get('flight_within_2weeks'),
-                mri_issues: formData.get('mri_issues'),
-                a_group_selections: formData.getAll('a_group_selections'),
-                b_group_selections: formData.getAll('b_group_selections'),
-                c_group_selections: formData.getAll('c_group_selections')
-            };
-
-            fetch('/api/submit', {  // 경로 수정
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(data)
-            })
-            .then(response => response.text())
-            .then(result => {
-                alert(result);
-            })
-            .catch(error => {
-                console.error('Error:', error);
-            });
-        });
+      });
     });
-</script>
+  </script>
 </body>
 </html>
