@@ -29,7 +29,21 @@
           <textarea name="address" placeholder="주소를 입력하세요" rows="1" cols="40"></textarea>
 
           <li>검진희망일</li>
-          <input type="datetime-local" name="preferred_date" step="1800">
+          <!-- 날짜와 시간을 분리하여 입력 -->
+          <input type="date" name="preferred_date_date">
+          <select name="preferred_date_time">
+            <option value="07:00">07:00</option>
+            <option value="07:30">07:30</option>
+            <option value="08:00">08:00</option>
+            <option value="08:30">08:30</option>
+            <option value="09:00">09:00</option>
+            <option value="09:30">09:30</option>
+            <option value="10:00">10:00</option>
+            <option value="10:30">10:30</option>
+            <option value="11:00">11:00</option>
+            <option value="11:30">11:30</option>
+            <option value="12:00">12:00</option>
+          </select>
         </ol>
         <h2>필수 확인 사항</h2>
         <ol>
@@ -112,9 +126,8 @@
         <section id="vip-checkup">
           <h2>검진유형안내</h2>
           <p>기본형 : 공통항목(90여종) + A그룹 선택 4가지 </p>
-            <p>소화기형 : 공통항목(90여종) + A그룹 선택 2가지 + B그룹 선택 1가지</p>
-            <p>MRI형 : 공통항목(90여종) + c그룹 선택 1가지</p>
-
+          <p>소화기형 : 공통항목(90여종) + A그룹 선택 2가지 + B그룹 선택 1가지</p>
+          <p>MRI형 : 공통항목(90여종) + C그룹 선택 1가지</p>
         </section>
         <section id="additional-info">
           <h2>기타안내</h2>
@@ -240,16 +253,67 @@
         });
       });
 
-      // 폼 제출 이벤트 처리
+      // 폼 제출 이벤트 처리 (검증 포함)
       document.querySelector('form').addEventListener('submit', (event) => {
         event.preventDefault();
 
-        // 검진 유형이 선택되지 않은 경우 제출 차단
+        // 인적사항 필수 입력 검증
+        const name = document.querySelector('textarea[name="name"]').value.trim();
+        const contact = document.querySelector('textarea[name="contact"]').value.trim();
+        const email = document.querySelector('textarea[name="email"]').value.trim();
+        const address = document.querySelector('textarea[name="address"]').value.trim();
+        if (!name || !contact || !email || !address) {
+          alert("인적사항(성명, 연락처, 이메일, 주소)을 모두 입력해 주세요.");
+          return;
+        }
+
+        // 검진희망일 필수 입력 검증 (날짜와 시간)
+        const preferredDateDate = document.querySelector('input[name="preferred_date_date"]').value;
+        const preferredDateTime = document.querySelector('select[name="preferred_date_time"]').value;
+        if (!preferredDateDate || !preferredDateTime) {
+          alert("검진희망일의 날짜와 시간을 모두 선택해 주세요.");
+          return;
+        }
+        const preferred_date = preferredDateDate + "T" + preferredDateTime;
+
+        // 필수 확인 사항 검증
+        const medications = document.querySelector('textarea[name="medications"]').value.trim();
+        if (!medications) {
+          alert("필수 확인 사항인 복용약 내용을 입력해 주세요.");
+          return;
+        }
+
+        // 검진 유형 선택 검증
         const selectedType = document.querySelector('input[name="checkup_type"]:checked');
         if (!selectedType) {
           alert("검진 유형을 선택해 주세요.");
           return;
         }
+        const checkupType = selectedType.value;
+
+        // 그룹별 선택 개수 검증
+        let validGroupSelection = true;
+        if (checkupType === "기본형") {
+          const countA = document.querySelectorAll('#a-group input[type="checkbox"]:checked').length;
+          if (countA !== 4) {
+            validGroupSelection = false;
+            alert("기본형은 A그룹에서 정확히 4개 항목을 선택해야 합니다.");
+          }
+        } else if (checkupType === "소화기형") {
+          const countA = document.querySelectorAll('#a-group input[type="checkbox"]:checked').length;
+          const countB = document.querySelectorAll('#b-group input[type="checkbox"]:checked').length;
+          if (countA !== 2 || countB !== 1) {
+            validGroupSelection = false;
+            alert("소화기형은 A그룹에서 정확히 2개, B그룹에서 정확히 1개 항목을 선택해야 합니다.");
+          }
+        } else if (checkupType === "MRI형") {
+          const countC = document.querySelectorAll('#c-group input[type="checkbox"]:checked').length;
+          if (countC !== 1) {
+            validGroupSelection = false;
+            alert("MRI형은 C그룹에서 정확히 1개 항목을 선택해야 합니다.");
+          }
+        }
+        if (!validGroupSelection) return;
 
         const formData = new FormData(event.target);
         const data = {
@@ -257,7 +321,7 @@
           contact: formData.get('contact'),
           email: formData.get('email'),
           address: formData.get('address'),
-          preferred_date: formData.get('preferred_date'),
+          preferred_date: preferred_date,
           medications: formData.get('medications'),
           polyp_removal: formData.get('polyp_removal'),
           flight_within_2weeks: formData.get('flight_within_2weeks'),
