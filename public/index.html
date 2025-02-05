@@ -14,7 +14,7 @@
   <main>
     <section id="mandatory-checks">
       <h2>인적사항</h2>
-      <!-- action 속성 제거하여 기본 제출을 막고 JavaScript로 처리 -->
+      <!-- action 속성을 제거했습니다 -->
       <form id="submissionForm" method="post">
         <ol>
           <li>성 명</li>
@@ -254,9 +254,10 @@
         });
       });
 
-      // 폼 제출 이벤트 처리 (검증 포함)
+      // 폼 제출 이벤트 처리 (검증 포함 및 fetch API 사용)
       document.getElementById('submissionForm').addEventListener('submit', (event) => {
         event.preventDefault();
+        console.log("폼 제출 이벤트 발생");
 
         // 인적사항 필수 입력 검증
         const name = document.querySelector('textarea[name="name"]').value.trim();
@@ -316,22 +317,24 @@
         }
         if (!validGroupSelection) return;
 
-        const formData = new FormData(document.getElementById('submissionForm'));
+        // 폼 데이터 객체 구성 (FormData를 사용하지 않고 수동으로 값 추출)
         const data = {
-          name: formData.get('name'),
-          contact: formData.get('contact'),
-          email: formData.get('email'),
-          address: formData.get('address'),
+          name: name,
+          contact: contact,
+          email: email,
+          address: address,
           preferred_date: preferred_date,
-          medications: formData.get('medications'),
-          polyp_removal: formData.get('polyp_removal'),
-          flight_within_2weeks: formData.get('flight_within_2weeks'),
-          mri_issues: formData.get('mri_issues'),
-          checkup_type: formData.get('checkup_type'),
-          a_group_selections: formData.getAll('a_group_selections'),
-          b_group_selections: formData.getAll('b_group_selections'),
-          c_group_selections: formData.getAll('c_group_selections')
+          medications: medications,
+          polyp_removal: document.querySelector('input[name="polyp_removal"]:checked')?.value,
+          flight_within_2weeks: document.querySelector('input[name="flight_within_2weeks"]:checked')?.value,
+          mri_issues: document.querySelector('textarea[name="mri_issues"]').value.trim(),
+          checkup_type: checkupType,
+          a_group_selections: Array.from(document.querySelectorAll('input[name="a_group_selections"]:checked')).map(cb => cb.value),
+          b_group_selections: Array.from(document.querySelectorAll('input[name="b_group_selections"]:checked')).map(cb => cb.value),
+          c_group_selections: Array.from(document.querySelectorAll('input[name="c_group_selections"]:checked')).map(cb => cb.value)
         };
+
+        console.log("제출 데이터:", data);
 
         fetch('/api/submit', {
           method: 'POST',
@@ -340,8 +343,12 @@
           },
           body: JSON.stringify(data)
         })
-        .then(response => response.text())
+        .then(response => {
+          console.log("응답 상태:", response.status);
+          return response.text();
+        })
         .then(result => {
+          console.log("서버 응답:", result);
           alert(result);
         })
         .catch(error => {
